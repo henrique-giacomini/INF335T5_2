@@ -1,25 +1,19 @@
 pipeline {
-    agent {
-        docker {
-            image 'openjdk:11'
-        }
+  agent { label "linux" }
+  stages {
+    stage("build") {
+      steps {
+        sh """
+          docker build -t OlaMundo .
+        """
+      }
     }
-    stages {
-        stage('Compilação') {
-            steps {
-                script {
-                    // Compilar o código Java
-                    sh 'javac OlaUnicamp.java'
-                }
-            }
-        }
-        stage('Execução') {
-            steps {
-                script {
-                    // Executar o código Java
-                    sh 'java OlaUnicamp'
-                }
-            }
-        }
+    stage("run") {
+      steps {
+        sh """
+          docker run --rm OlaMundo
+        """
+      }
     }
+  }
 }
