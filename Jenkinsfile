@@ -1,19 +1,16 @@
 pipeline {
-  agent { label "linux" }
-  stages {
-    stage("build") {
-      steps {
-        sh """
-          docker build -t OlaMundo .
-        """
-      }
+    agent { label 'linux' }
+
+    stages {
+        stage('build') {
+            steps {
+                sh 'docker build -t olamundo .'
+            }
+        }
+        stage('run') {
+            steps {
+                sh 'docker run --rm olamundo'
+            }
+        }
     }
-    stage("run") {
-      steps {
-        sh """
-          docker run --rm OlaMundo
-        """
-      }
-    }
-  }
 }
